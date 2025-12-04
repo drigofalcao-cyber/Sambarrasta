@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SAMBARRASTA — Samba & Pagode | Agenda, Música e Merch</title>
+    <meta name="description" content="SAMBARRASTA é uma banda de samba e pagode com sotaque moderno. Confira músicas, agenda de shows e loja oficial." />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="SAMBARRASTA — Samba & Pagode" />
+    <meta property="og:description" content="Energia que contagia palcos e corações. Confira nossa agenda e músicas." />
+    <meta property="og:image" content="https://picsum.photos/1200/630" />
+    <meta property="og:type" content="website" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              emerald: {
+                DEFAULT: '#0F8F6F',
+                dark: '#0b6e56',
+                900: '#064e3b',
+                950: '#022c22',
+              },
+              gold: {
+                DEFAULT: '#FFC83D',
+                light: '#ffe08a',
+              },
+              bordeaux: {
+                DEFAULT: '#8B1E3F',
+                light: '#a6244b',
+              },
+              offwhite: '#FBFBF9',
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', 'serif'],
+              sans: ['"Poppins"', 'sans-serif'],
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.3s ease-in-out',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FBFBF9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0F8F6F;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #064e3b;
+        }
+        
+        /* Utility to hide scrollbar but keep functionality if needed */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0"
+  }
+}
+</script>
+</head>
+<body class="bg-offwhite text-gray-800 antialiased font-sans">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5 bg-transparent">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div id="nav-logo-icon" class="p-2 rounded-full border-2 transition-colors border-white text-white">
+                    <i data-lucide="music-2" width="24" height="24"></i>
+                </div>
+                <span id="nav-logo-text" class="font-serif font-bold text-xl md:text-2xl tracking-wide text-white">
+                    SAMBA<span class="text-gold">RRASTA</span>
+                </span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex gap-8 items-center">
+                <a href="#player" class="nav-link text-sm font-medium tracking-wider uppercase hover:text-gold transition-colors text-white/90">Músicas</a>
+                <a href="#bio" class="nav-link text-sm font-medium tracking-wider uppercase hover:text-gold transition-colors text-white/90">Sobre</a>
+                <a href="#shows" class="nav-link text-sm font-medium tracking-wider uppercase hover:text-gold transition-colors text-white/90">Agenda</a>
+                <a href="#gallery" class="nav-link text-sm font-medium tracking-wider uppercase hover:text-gold transition-colors text-white/90">Galeria</a>
+                <a href="#merch" class="nav-link text-sm font-medium tracking-wider uppercase hover:text-gold transition-colors text-white/90">Loja</a>
+                <a href="#contact" class="nav-link text-sm font-medium tracking-wider uppercase hover:text-gold transition-colors text-white/90">Contato</a>
+                
+                <a href="#shows" class="px-6 py-2 bg-gold hover:bg-gold-light text-emerald-900 font-bold rounded-full transition-transform hover:scale-105">
+                    Ingressos
+                </a>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-white">
+                <i data-lucide="menu" width="28" height="28"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-emerald-900 shadow-xl border-t border-emerald-800 animate-fade-in">
+            <div class="flex flex-col p-6 gap-4">
+                <a href="#player" class="mobile-link text-white text-lg font-medium hover:text-gold">Músicas</a>
+                <a href="#bio" class="mobile-link text-white text-lg font-medium hover:text-gold">Sobre</a>
+                <a href="#shows" class="mobile-link text-white text-lg font-medium hover:text-gold">Agenda</a>
+                <a href="#gallery" class="mobile-link text-white text-lg font-medium hover:text-gold">Galeria</a>
+                <a href="#merch" class="mobile-link text-white text-lg font-medium hover:text-gold">Loja</a>
+                <a href="#contact" class="mobile-link text-white text-lg font-medium hover:text-gold">Contato</a>
+                <a href="#shows" class="mobile-link mt-2 text-center py-3 bg-gold text-emerald-900 font-bold rounded-lg">
+                    Comprar Ingressos
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="topo.jpeg" alt="Sambarrasta Live Concert" class="w-full h-full object-cover">
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-emerald-900 via-emerald-900/60 to-transparent opacity-90"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-10 container mx-auto px-4 text-center">
+            <div class="mb-4 inline-flex items-center gap-2 px-4 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-gold-light text-sm tracking-widest uppercase font-semibold">
+                <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                Banda • Samba • Pagode
+            </div>
+
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl font-bold text-white mb-4 tracking-tight drop-shadow-xl">
+                SAMBA<span class="text-gold italic">RRASTA</span>
+            </h1>
+
+            <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+                Pagode roots de Recife-PE
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                <a href="#player" class="flex items-center gap-2 px-8 py-4 bg-gold hover:bg-gold-light text-emerald-900 font-bold rounded-full text-lg transition-all hover:-translate-y-1 shadow-lg shadow-gold/20">
+                    <i data-lucide="play" fill="currentColor" width="20" height="20"></i>
+                    Ouvir Agora
+                </a>
+                <a href="#shows" class="flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-white hover:bg-white hover:text-emerald-900 text-white font-bold rounded-full text-lg transition-all hover:-translate-y-1">
+                    <i data-lucide="calendar" width="20" height="20"></i>
+                    Agenda & Shows
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            <div class="w-[1px] h-16 bg-gradient-to-b from-transparent via-white to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Music Player Section -->
+    <section id="player" class="py-20 bg-offwhite relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-emerald-900 mb-4">
+                    Nosso Som
+                </h2>
+                <p class="text-gray-600 max-w-xl mx-auto">
+                    Confira nossa música autoral e sinta a energia do Sambarrasta.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <!-- Song List -->
+                <div class="space-y-4" id="song-list">
+                    <!-- Song 1 -->
+                    <div class="song-item group flex items-center p-4 rounded-xl cursor-pointer transition-all duration-300 border bg-white border-gold shadow-md scale-[1.02]" 
+                         data-id="1"
+                         data-title="Energia que Contagia"
+                         data-album="Ao Vivo em Madureira"
+                         data-cover="https://picsum.photos/300/300?random=1"
+                         data-platform="spotify"
+                         data-embed="https://open.spotify.com/embed/track/1PJDs0G3qDjHNQ7NFHKn0D">
+                        <div class="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                            <img src="https://picsum.photos/300/300?random=1" alt="Cover" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center play-icon-overlay opacity-100">
+                                <i data-lucide="play-circle" class="text-white" width="24" height="24"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4 flex-grow">
+                            <h3 class="song-title font-bold text-lg text-emerald-900">Tudo por Voceê</h3>
+                            <p class="text-sm text-gray-500">Sambarrasta</p>
+                        </div>
+                        <button class="p-2 text-gray-400 hover:text-gold transition-colors share-btn">
+                            <i data-lucide="share-2" width="20" height="20"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Player -->
+                <div class="bg-emerald-900 rounded-3xl p-6 shadow-2xl text-white relative overflow-hidden">
+                    <!-- Background Texture -->
+                    <div class="absolute top-0 right-0 p-32 bg-gold rounded-full blur-[100px] opacity-20"></div>
+
+                    <div class="relative z-10">
+                        <div id="player-container" class="aspect-video w-full bg-black/20 rounded-xl mb-6 overflow-hidden flex items-center justify-center border border-white/10">
+                            <iframe id="player-frame"
+                                style="border-radius: 12px" 
+                                src="https://open.spotify.com/embed/artist/3r8Ck4xIkJ7U0yONloUspS?utm_source=generator
+" 
+                                width="100%" 
+                                height="352" 
+                                frameborder="0" 
+                                allowfullscreen 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                        
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <h3 id="current-title" class="text-2xl font-bold text-gold mb-1">Tudo por Você</h3>
+                                <p id="current-album" class="text-emerald-100">Sambarrasta</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-xs font-mono text-emerald-200 border border-emerald-700 px-2 py-1 rounded">
+                                    NOW PLAYING
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bio Section -->
+    <section id="bio" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                
+                <div class="lg:w-1/2">
+                    <div class="relative">
+                        <div class="absolute -top-4 -left-4 w-24 h-24 bg-gold/20 rounded-full blur-xl"></div>
+                        <h2 class="font-serif text-4xl md:text-5xl font-bold text-emerald-900 mb-6 relative z-10">
+                            Sobre a <span class="text-bordeaux italic">Banda</span>
+                        </h2>
+                    </div>
+                    
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        Nascidos em meio à efervescência
+cultural de um Recife pré carnavalesco, a SAMBARRASTA é uma banda formada por Rafa, Toni, Peu e Paka, amigos que se uniram através do gosto musical em comum, levando-os a cantar músicas de
+diversos ritmos (especialmente reggae, MPB e rock) tocados em ritmo de samba e pagode.                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                       Junte isso a um repertório repleto de
+clássicos do pagode dos anos 90, samba, axé, frevo, brega e hits que atravessam gerações e essa é a fórmula da SAMBARRASTA: uma mistura de hits atemporais com uma energia incrível do início ao final do show.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-8">
+                      
+                        <div>
+                            <span class="block text-4xl font-serif font-bold text-gold">22k</span>
+                            <span class="text-sm text-gray-500 uppercase tracking-wider">Fãs nas Redes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="group relative overflow-hidden rounded-2xl">
+                        <img src="https://picsum.photos/400/500?random=10" alt="Lucas Silva" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <h4 class="text-white font-bold text-lg">Lucas Silva</h4>
+                            <span class="text-gold text-sm font-medium">Vocal</span>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl translate-y-8">
+                        <img src="https://picsum.photos/400/500?random=11" alt="João Pedro" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <h4 class="text-white font-bold text-lg">João Pedro</h4>
+                            <span class="text-gold text-sm font-medium">Cavaco</span>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl">
+                        <img src="https://picsum.photos/400/500?random=12" alt="Marcão" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <h4 class="text-white font-bold text-lg">Marcão</h4>
+                            <span class="text-gold text-sm font-medium">Percussão</span>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl translate-y-8">
+                        <img src="https://picsum.photos/400/500?random=13" alt="Thiaguinho" class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <h4 class="text-white font-bold text-lg">Thiaguinho</h4>
+                            <span class="text-gold text-sm font-medium">Violão</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Tour Dates Section -->
+    <section id="shows" class="py-24 bg-emerald-900 text-white relative overflow-hidden">
+        <!-- Background Decor -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <pattern id="pattern-circles" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <circle cx="20" cy="20" r="2" fill="currentColor" />
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#pattern-circles)" />
+            </svg>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <span class="text-gold font-bold tracking-widest uppercase mb-2 block">Agenda 2024</span>
+                    <h2 class="font-serif text-4xl md:text-6xl font-bold">Próximos Shows</h2>
+                </div>
+                <a href="#contact" class="hidden md:inline-block px-8 py-3 border border-gold text-gold hover:bg-gold hover:text-emerald-900 rounded-full transition-colors font-bold">
+                    Quero Contratar
+                </a>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Show 1 -->
+                <div class="group flex flex-col md:flex-row items-center bg-emerald-800/30 hover:bg-emerald-800/50 border border-emerald-700 hover:border-gold/50 rounded-2xl p-6 transition-all duration-300">
+                    <div class="flex flex-row md:flex-col items-center md:items-start min-w-[100px] border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0 md:pr-6 mb-4 md:mb-0 gap-3 md:gap-0">
+                        <span class="text-3xl md:text-4xl font-bold text-white">06</span>
+                        <span class="text-lg md:text-xl text-gold font-serif">DEZ</span>
+                    </div>
+                    <div class="flex-grow text-center md:text-left px-0 md:px-8 mb-4 md:mb-0">
+                        <h3 class="text-xl font-bold text-white mb-1">Roof Samba</h3>
+                        <div class="flex items-center justify-center md:justify-start gap-2 text-emerald-200">
+                            <i data-lucide="map-pin" width="16" height="16"></i>
+                            <span>Recife, PE</span>
+                        </div>
+                    </div>
+                    <div class="min-w-[160px] flex justify-center md:justify-end">
+                        <a href="#" class="flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-light text-emerald-900 rounded-lg font-bold transition-transform hover:scale-105 shadow-lg shadow-gold/10">
+                            <i data-lucide="ticket" width="18" height="18"></i>
+                            Ingressos
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Show 2 (Sold Out) -->
+                <div class="group flex flex-col md:flex-row items-center bg-emerald-800/30 hover:bg-emerald-800/50 border border-emerald-700 hover:border-gold/50 rounded-2xl p-6 transition-all duration-300">
+                    <div class="flex flex-row md:flex-col items-center md:items-start min-w-[100px] border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0 md:pr-6 mb-4 md:mb-0 gap-3 md:gap-0">
+                        <span class="text-3xl md:text-4xl font-bold text-white">07</span>
+                        <span class="text-lg md:text-xl text-gold font-serif">DEZ</span>
+                    </div>
+                    <div class="flex-grow text-center md:text-left px-0 md:px-8 mb-4 md:mb-0">
+                        <h3 class="text-xl font-bold text-white mb-1">Evento particular</h3>
+                        <div class="flex items-center justify-center md:justify-start gap-2 text-emerald-200">
+                            <i data-lucide="map-pin" width="16" height="16"></i>
+                            <span>Aldeia, PE</span>
+                        </div>
+                    </div>
+                    <div class="min-w-[160px] flex justify-center md:justify-end">
+                        <span class="px-6 py-3 bg-red-500/20 text-red-200 rounded-lg font-bold text-sm uppercase tracking-wide cursor-not-allowed">
+                            Esgotado
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Show 3 -->
+                <div class="group flex flex-col md:flex-row items-center bg-emerald-800/30 hover:bg-emerald-800/50 border border-emerald-700 hover:border-gold/50 rounded-2xl p-6 transition-all duration-300">
+                    <div class="flex flex-row md:flex-col items-center md:items-start min-w-[100px] border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0 md:pr-6 mb-4 md:mb-0 gap-3 md:gap-0">
+                        <span class="text-3xl md:text-4xl font-bold text-white">07</span>
+                        <span class="text-lg md:text-xl text-gold font-serif">DEZ</span>
+                    </div>
+                    <div class="flex-grow text-center md:text-left px-0 md:px-8 mb-4 md:mb-0">
+                        <h3 class="text-xl font-bold text-white mb-1">Evento particular</h3>
+                        <div class="flex items-center justify-center md:justify-start gap-2 text-emerald-200">
+                            <i data-lucide="map-pin" width="16" height="16"></i>
+                            <span>Carneiros, PE</span>
+                        </div>
+                    </div>
+                    <div class="min-w-[160px] flex justify-center md:justify-end">
+                        <a href="#" class="flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-light text-emerald-900 rounded-lg font-bold transition-transform hover:scale-105 shadow-lg shadow-gold/10">
+                            <i data-lucide="ticket" width="18" height="18"></i>
+                            Ingressos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center md:hidden">
+                <a href="#contact" class="inline-block w-full px-8 py-4 bg-emerald-800 text-white rounded-full font-bold">
+                    Quero Contratar
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-offwhite">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-emerald-900">Galeria</h2>
+                <p class="mt-4 text-gray-600">Melhores momentos dentro e fora do palco</p>
+            </div>
+
+
+
+                <!-- Photo Grid -->
+                <div class="md:col-span-1 md:row-span-1 rounded-2xl overflow-hidden relative group">
+                    <img src="https://picsum.photos/400/400?random=51" alt="Crowd" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="md:col-span-1 md:row-span-1 rounded-2xl overflow-hidden relative group">
+                    <img src="https://picsum.photos/400/400?random=52" alt="Backstage" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="md:col-span-2 md:row-span-1 rounded-2xl overflow-hidden relative group">
+                    <img src="https://picsum.photos/800/400?random=53" alt="Band" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="https://instagram.com" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 text-emerald-900 font-bold hover:text-bordeaux transition-colors">
+                    <i data-lucide="instagram" width="20" height="20"></i>
+                    Siga no Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Merch Section -->
+    <section id="merch" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-emerald-900">Loja Oficial</h2>
+                    <p class="mt-2 text-gray-600">Vista a camisa do samba.</p>
+                </div>
+                <a href="#" class="hidden md:flex items-center gap-2 text-emerald-900 font-medium hover:text-gold transition-colors">
+                    Ver todos produtos &rarr;
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div class="group">
+                    <div class="bg-gray-100 rounded-2xl overflow-hidden mb-4 relative aspect-square">
+                        <img src="https://picsum.photos/400/400?random=20" alt="Camiseta Oficial" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <button class="absolute bottom-4 right-4 bg-white hover:bg-emerald-900 hover:text-white text-emerald-900 p-3 rounded-full shadow-lg translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <i data-lucide="shopping-bag" width="20" height="20"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gold font-bold tracking-wider uppercase">Vestuário</span>
+                        <h3 class="font-bold text-lg text-gray-900">Camiseta Oficial 2024</h3>
+                        <p class="text-gray-500">R$ 89,90</p>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="group">
+                    <div class="bg-gray-100 rounded-2xl overflow-hidden mb-4 relative aspect-square">
+                        <img src="https://picsum.photos/400/400?random=21" alt="Boné Sambar" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <button class="absolute bottom-4 right-4 bg-white hover:bg-emerald-900 hover:text-white text-emerald-900 p-3 rounded-full shadow-lg translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <i data-lucide="shopping-bag" width="20" height="20"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gold font-bold tracking-wider uppercase">Acessórios</span>
+                        <h3 class="font-bold text-lg text-gray-900">Boné Sambar</h3>
+                        <p class="text-gray-500">R$ 59,90</p>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="group">
+                    <div class="bg-gray-100 rounded-2xl overflow-hidden mb-4 relative aspect-square">
+                        <img src="https://picsum.photos/400/400?random=22" alt="Vinil Origens" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <button class="absolute bottom-4 right-4 bg-white hover:bg-emerald-900 hover:text-white text-emerald-900 p-3 rounded-full shadow-lg translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <i data-lucide="shopping-bag" width="20" height="20"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gold font-bold tracking-wider uppercase">Música</span>
+                        <h3 class="font-bold text-lg text-gray-900">Vinil "Origens" (Ed. Limitada)</h3>
+                        <p class="text-gray-500">R$ 149,90</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center md:hidden">
+                <a href="#" class="inline-block px-6 py-3 bg-emerald-100 text-emerald-900 rounded-full font-bold">
+                    Visitar Loja
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-emerald-900 relative text-white">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
+                
+                <!-- Info Side -->
+                <div class="bg-gold p-10 md:w-2/5 flex flex-col justify-between text-emerald-900">
+                    <div>
+                        <h3 class="font-serif text-3xl font-bold mb-4">Entre na Lista VIP</h3>
+                        <p class="mb-6 font-medium">
+                            Receba novidades, pré-venda de ingressos e descontos exclusivos na loja.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-emerald-900/10 flex items-center justify-center">
+                                    <i data-lucide="check-circle" width="16" height="16"></i>
+                                </div>
+                                <span>Agenda em primeira mão</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-emerald-900/10 flex items-center justify-center">
+                                    <i data-lucide="check-circle" width="16" height="16"></i>
+                                </div>
+                                <span>Meet & Greet sorteios</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <p class="text-sm font-bold uppercase tracking-widest opacity-70 mb-2">Booking & Shows</p>
+                        <p class="font-serif text-xl">shows@sambarrasta.com.br</p>
+                        <p class="font-serif text-xl">+55 (21) 99999-9999</p>
+                    </div>
+                </div>
+
+                <!-- Form Side -->
+                <div class="p-10 md:w-3/5 bg-white text-gray-800">
+                    <h3 class="text-2xl font-bold text-emerald-900 mb-6">Fale com a gente</h3>
+                    
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                            <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition-all" placeholder="Seu nome">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                            <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition-all" placeholder="seu@email.com">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
+                                <input type="text" name="city" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition-all" placeholder="Cidade/UF">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Interesse</label>
+                                <select name="interest" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition-all">
+                                    <option value="shows">Shows / Agenda</option>
+                                    <option value="booking">Contratar Show</option>
+                                    <option value="shop">Loja / Merch</option>
+                                    <option value="press">Imprensa</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 bg-emerald-900 hover:bg-emerald-800 text-white font-bold rounded-lg transition-all hover:shadow-lg mt-2 flex items-center justify-center gap-2">
+                            <span id="btn-text">Cadastrar</span>
+                            <span id="btn-loader" class="hidden w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Success Modal (Hidden by default) -->
+        <div id="success-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in">
+            <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center relative">
+                <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" width="24" height="24"></i>
+                </button>
+                
+                <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="check-circle" width="32" height="32"></i>
+                </div>
+                
+                <h3 class="font-serif text-2xl font-bold text-emerald-900 mb-2">Cadastro Confirmado!</h3>
+                <p class="text-gray-600 mb-6">
+                    Obrigado por se inscrever. Agora você faz parte da nossa família VIP.
+                </p>
+                
+                <a href="https://wa.me/5521999999999" target="_blank" rel="noreferrer" class="flex items-center justify-center gap-2 w-full py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg mb-3">
+                    Chamar no WhatsApp
+                </a>
+                <button id="close-modal-action" class="block w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-lg">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-emerald-950 text-white pt-20 pb-10">
+        <div class="container mx-auto px-4">
+            
+            <div class="mb-16 grid grid-cols-1 md:grid-cols-2 gap-8 border-b border-emerald-800 pb-16">
+                <div class="md:pr-8">
+                    <h3 class="font-serif text-2xl font-bold mb-6 text-gold">O que dizem por aí</h3>
+                    <div class="grid gap-6">
+                        <blockquote class="bg-emerald-900/50 p-6 rounded-xl border border-emerald-800">
+                            <p class="italic text-emerald-100 mb-4">"Uma lufada de ar fresco no cenário nacional. O Sambarasta traz a tradição com uma roupagem impecável."</p>
+                            <cite class="not-italic flex items-center gap-3">
+                                <span class="font-bold text-white">Revista do Samba</span>
+                                <span class="w-1 h-1 bg-gold rounded-full"></span>
+                                <span class="text-sm text-emerald-400">Crítica Musical</span>
+                            </cite>
+                        </blockquote>
+                        <blockquote class="bg-emerald-900/50 p-6 rounded-xl border border-emerald-800">
+                            <p class="italic text-emerald-100 mb-4">"Energia pura! O show ao vivo é uma experiência que todo fã de música brasileira precisa viver."</p>
+                            <cite class="not-italic flex items-center gap-3">
+                                <span class="font-bold text-white">Portal PopLine</span>
+                                <span class="w-1 h-1 bg-gold rounded-full"></span>
+                                <span class="text-sm text-emerald-400">Editorial</span>
+                            </cite>
+                        </blockquote>
+                    </div>
+                    <button class="mt-6 text-sm text-gold hover:text-white transition-colors underline decoration-gold underline-offset-4">
+                        Baixar Press Kit (PDF)
+                    </button>
+                </div>
+                
+                <div class="flex flex-col justify-center items-center md:items-end text-center md:text-right">
+                    <i data-lucide="music-2" class="text-emerald-800 mb-4" width="64" height="64"></i>
+                    <h2 class="font-serif text-4xl font-bold mb-2">SAMBARRASTA</h2>
+                    <p class="text-emerald-400 max-w-sm">
+                        Levando alegria e samba no pé para todo o Brasil.
+                        Siga nossas redes e fique por dentro.
+                    </p>
+                    <div class="flex gap-4 mt-6">
+                        <a href="#" class="p-3 bg-emerald-900 rounded-full hover:bg-gold hover:text-emerald-900 transition-colors">
+                            <i data-lucide="instagram" width="20" height="20"></i>
+                        </a>
+                        <a href="#" class="p-3 bg-emerald-900 rounded-full hover:bg-gold hover:text-emerald-900 transition-colors">
+                            <i data-lucide="youtube" width="20" height="20"></i>
+                        </a>
+                        <a href="#" class="p-3 bg-emerald-900 rounded-full hover:bg-gold hover:text-emerald-900 transition-colors">
+                            <i data-lucide="facebook" width="20" height="20"></i>
+                        </a>
+                        <a href="#" class="p-3 bg-emerald-900 rounded-full hover:bg-gold hover:text-emerald-900 transition-colors">
+                            <i data-lucide="twitter" width="20" height="20"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-emerald-600">
+                <p>&copy; 2024 SAMBARRASTA. Todos os direitos reservados.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-emerald-400">Termos de Uso</a>
+                    <a href="#" class="hover:text-emerald-400">Privacidade</a>
+                    <a href="#" class="hover:text-emerald-400">Contato</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Navbar Logic
+        const navbar = document.getElementById('navbar');
+        const navLogoIcon = document.getElementById('nav-logo-icon');
+        const navLogoText = document.getElementById('nav-logo-text');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-emerald-900/95', 'backdrop-blur-sm', 'shadow-lg', 'py-3');
+                navbar.classList.remove('bg-transparent', 'py-5');
+                
+                // Color updates
+                navLogoIcon.classList.add('border-gold', 'text-gold');
+                navLogoIcon.classList.remove('border-white', 'text-white');
+                navLogoText.classList.remove('text-white');
+                navLogoText.classList.add('text-white'); // keep white but span is gold
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('text-white/90');
+                    link.classList.add('text-gray-100');
+                });
+            } else {
+                navbar.classList.remove('bg-emerald-900/95', 'backdrop-blur-sm', 'shadow-lg', 'py-3');
+                navbar.classList.add('bg-transparent', 'py-5');
+
+                navLogoIcon.classList.remove('border-gold', 'text-gold');
+                navLogoIcon.classList.add('border-white', 'text-white');
+                
+                navLinks.forEach(link => {
+                    link.classList.add('text-white/90');
+                    link.classList.remove('text-gray-100');
+                });
+            }
+        });
+
+        // Mobile Menu Toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenu.classList.contains('hidden') ? 'menu' : 'x';
+            // Re-render icon
+            mobileMenuBtn.innerHTML = `<i data-lucide="${icon}" width="28" height="28"></i>`;
+            lucide.createIcons();
+        });
+
+        // Close mobile menu on link click
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenuBtn.innerHTML = `<i data-lucide="menu" width="28" height="28"></i>`;
+                lucide.createIcons();
+            });
+        });
+
+        // Music Player Logic
+        const songItems = document.querySelectorAll('.song-item');
+        const playerFrame = document.getElementById('player-frame');
+        const playerContainer = document.getElementById('player-container');
+        const currentTitle = document.getElementById('current-title');
+        const currentAlbum = document.getElementById('current-album');
+
+        songItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active state from all
+                songItems.forEach(i => {
+                    i.classList.remove('bg-white', 'border-gold', 'shadow-md', 'scale-[1.02]');
+                    i.classList.add('bg-white/50', 'border-transparent');
+                    
+                    const overlay = i.querySelector('.play-icon-overlay');
+                    overlay.classList.remove('opacity-100');
+                    overlay.classList.add('opacity-0', 'group-hover:opacity-100');
+
+                    const title = i.querySelector('.song-title');
+                    title.classList.remove('text-emerald-900');
+                    title.classList.add('text-gray-800');
+                });
+
+                // Add active state to clicked
+                item.classList.remove('bg-white/50', 'border-transparent');
+                item.classList.add('bg-white', 'border-gold', 'shadow-md', 'scale-[1.02]');
+                
+                const overlay = item.querySelector('.play-icon-overlay');
+                overlay.classList.remove('opacity-0', 'group-hover:opacity-100');
+                overlay.classList.add('opacity-100');
+
+                const title = item.querySelector('.song-title');
+                title.classList.remove('text-gray-800');
+                title.classList.add('text-emerald-900');
+
+                // Update Player
+                const data = item.dataset;
+                currentTitle.innerText = data.title;
+                currentAlbum.innerText = data.album;
+
+                if (data.platform === 'spotify' || data.platform === 'youtube') {
+                    playerFrame.style.display = 'block';
+                    playerFrame.src = data.embed;
+                } else {
+                   // Fallback for other types if needed
+                }
+            });
+        });
+
+        // Contact Form Logic
+        const contactForm = document.getElementById('contact-form');
+        const successModal = document.getElementById('success-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const closeModalAction = document.getElementById('close-modal-action');
+        const btnText = document.getElementById('btn-text');
+        const btnLoader = document.getElementById('btn-loader');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Loading state
+            btnText.classList.add('hidden');
+            btnLoader.classList.remove('hidden');
+
+            // Simulate API
+            setTimeout(() => {
+                btnText.classList.remove('hidden');
+                btnLoader.classList.add('hidden');
+                contactForm.reset();
+                successModal.classList.remove('hidden');
+            }, 1500);
+        });
+
+        const closeModal = () => successModal.classList.add('hidden');
+        closeModalBtn.addEventListener('click', closeModal);
+        closeModalAction.addEventListener('click', closeModal);
+
+        // Simple Share mock
+        document.querySelectorAll('.share-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                alert('Link copiado para a área de transferência!');
+            });
+        });
+    </script>
+</body>
+</html>
